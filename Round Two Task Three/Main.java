@@ -13,10 +13,12 @@ public class Main {
         while (s.hasNext()) nums.add(Integer.parseInt(s.nextLine()));
         System.out.println("A, Total numbers divisible by 317: " + taskA(317));
         System.out.println("B, Total numbers that are finite decimals when divided by 612: " + taskB());
-
+        taskC();
 
         //System.out.println(getPrimeFactors(6054));
         //System.out.println(isFractionFinite(76, 9));
+        int[] f = simplifyFraction(9, 18);
+        System.out.println(f[0] + " " + f[1]);
 
     }
 
@@ -39,6 +41,34 @@ public class Main {
     }
 
     public static int taskC() {
+
+        /*String decimals = (((float) nums.get(0) / (float) 317) + "").split("\\.")[1];
+        for (int i = 0; i <= decimals.length() - 1; i++) continue;
+        System.out.println(decimals);*/
+
+        /*System.out.println(((double) nums.get(0) * 10.0) / ((double) 317));
+        System.out.println(((double) nums.get(0) * 100000.0) / ((double) 317));*/
+
+        preciseDivision(nums.get(0), 317);
+
+        return 0;
+
+    }
+
+    public static int preciseDivision(int a, int b) {
+
+        int remainder = a % b, total = a / b;
+
+        for (int i = 0; i <= 20; i++) {
+
+            while (remainder < b) remainder *= 10;
+            total *= 10;
+            total += remainder / b;
+            remainder = remainder % b;
+
+        }
+
+        System.out.println(total);
 
         return 0;
 
