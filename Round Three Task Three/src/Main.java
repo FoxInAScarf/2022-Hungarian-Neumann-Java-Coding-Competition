@@ -5,10 +5,14 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        List<String> a = getNumbers("403292963733218921303328606261120475832956098470061489222021941160891584704399888549234627049830837928369818247008386334945660063804769026872676317213"),
-                b = getNumbers("961646638602950029510034410209339645064157605742674247689838912413030584711676963415048434908804062786232792850219375660393320882593952053160336200718");
+        String as = "403292963733218921303328606261120475832956098470061489222021941160891584704399888549234627049830837928369818247008386334945660063804769026872676317213",
+                bs = "961646638602950029510034410209339645064157605742674247689838912413030584711676963415048434908804062786232792850219375660393320882593952053160336200718";
+
+        List<String> a = getNumbers(as), b = getNumbers(bs);
 
         System.out.println("A, Multiple of all *blah blah blah*: " + taskA(a, b));
+        System.out.println("B, Largest number contained in both *blah blah blah*: " + taskB(a, b));
+        System.out.println("C, Whatever: " + taskC(as + bs));
 
     }
 
@@ -32,6 +36,16 @@ public class Main {
 
     }
 
+    /*
+    *
+    * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    *
+    * DON'T BLAME ME FOR SHITTY CODE I ONLY JUST FOUND OUT THAT BigInteger EXISTS!
+    *
+    * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    *
+    * */
+
     public static BigInteger taskA(List<String> a, List<String> b) {
 
         List<String> nc = new ArrayList<>();
@@ -43,6 +57,48 @@ public class Main {
         for (BigInteger c : intify(nc)) total = total.multiply(c);
 
         return total;
+
+    }
+
+    public static BigInteger taskB(List<String> a, List<String> b) {
+
+        BigInteger max = new BigInteger("0");
+
+        for (String c : a) if (b.contains(c) && max.compareTo(new BigInteger(c)) == -1) max = new BigInteger(c);
+        for (String c : b) if (a.contains(c) && max.compareTo(new BigInteger(c)) == -1) max = new BigInteger(c);
+
+        return max;
+
+    }
+
+    public static int taskC(String n) {
+
+        List<String> ns = new ArrayList<>();
+
+        int i = 0;
+        while (i + 3 <= n.length() - 1) {
+
+            String cn = n.split("")[i];
+            cn += Integer.parseInt(n.split("")[i + 1]);
+            cn += Integer.parseInt(n.split("")[i + 2]);
+            cn += Integer.parseInt(n.split("")[i + 3]);
+            ns.add(cn);
+
+            i++;
+
+        }
+        //System.out.println("TEST: " + ns);
+
+        int max = 0;
+        for (String c : ns) {
+
+            int tn = 1;
+            for (int j = 0; j <= 3; j++) tn *= Integer.parseInt(c.split("")[j]);
+            if (tn > max) max = tn;
+
+        }
+
+        return max;
 
     }
 
